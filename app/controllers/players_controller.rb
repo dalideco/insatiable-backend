@@ -10,9 +10,10 @@ class PlayersController < ApplicationController
         puts "test"
         puts player_params
         @player = Player.create(player_params)
-
-        render json: @player
         
+
+        render json: @player 
+
     end
 
     def update
