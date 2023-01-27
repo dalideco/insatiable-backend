@@ -18,5 +18,6 @@ module InsatiableBackend
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.exceptions_app = ->(env) { ActionDispatch::PublicExceptionsPlus.new(Rails.public_path).call(env) }
   end
 end
