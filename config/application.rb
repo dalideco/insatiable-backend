@@ -1,6 +1,6 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -19,5 +19,10 @@ module InsatiableBackend
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.exceptions_app = ->(env) { ActionDispatch::PublicExceptionsPlus.new(Rails.public_path).call(env) }
+
+    # create a logger with a file as a logging target
+    config.logger = Logger.new('log/important.log')
+    # set the minimum log level
+    config.log_level = :warn
   end
 end

@@ -7,8 +7,8 @@ class PlayersController < ApplicationController
   end
 
   def create
-    puts 'test'
-    puts player_params
+    Rails.logger.info 'test'
+    Rails.logger.info player_params
     @player = Player.create(player_params)
 
     render json: @player
@@ -16,7 +16,7 @@ class PlayersController < ApplicationController
 
   def update
     player = Player.find(params[:id])
-    player.update_attributes(player_params)
+    player.update(player_params)
     render json: player
   end
 
@@ -29,7 +29,7 @@ class PlayersController < ApplicationController
   end
 
   def existing_email(exception)
-    render status: 409, json: { 'error' => 'Email already exists', 'message' => exception.message }
+    render status: :conflict, json: { 'error' => 'Email already exists', 'message' => exception.message }
     nil
   end
 end
