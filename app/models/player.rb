@@ -5,13 +5,13 @@ class Player < ApplicationRecord
   validates :password, presence: true
 
   # relationshipt with weapons
-  has_many :owns, class_name: 'own', dependent: :delete_all
-  has_many :owned_weapons, class_name: 'weapon', through: :owns, source: :weapon
+  has_many :owns, dependent: :delete_all
+  has_many :owned_weapons, through: :owns, source: :weapon
 
   # relationship with packs
-  has_many :own_packs, class_name: 'own_pack', dependent: :delete_all
-  has_many :owned_packs, class_name: 'pack', through: :own_packs, source: :pack
+  has_many :own_packs, dependent: :delete_all
+  has_many :owned_packs, through: :own_packs, source: :pack
 
   # relationship with offers
-  has_many :offers, class_name: 'offer', dependent: :delete_all
+  has_many :offers, dependent: :delete_all
 end

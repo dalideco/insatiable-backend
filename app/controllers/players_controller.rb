@@ -20,6 +20,13 @@ class PlayersController < ApplicationController
     render json: player
   end
 
+  def show
+    player = Player.find(params[:id])
+    Rails.logger.info player.offers
+    Rails.logger.info player.owned_weapons
+    render json: player
+  end
+
   private
 
   def player_params

@@ -4,8 +4,8 @@ class Offer < ApplicationRecord
   validates :buy_now_price, presence: true
 
   # many to one relationship with player
-  belongs_to :player, class_name: 'player'
+  belongs_to :player
 
   # many to one relationship with weapons
-  belongs_to :weapon, class_name: 'weapon'
+  belongs_to :weapon
 end
