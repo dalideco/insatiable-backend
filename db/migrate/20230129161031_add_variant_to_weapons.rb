@@ -1,3 +1,4 @@
+# Migration variant column with enum in weapons table
 class AddVariantToWeapons < ActiveRecord::Migration[7.0]
   def change
     add_column :weapons, :variant, :integer, default: 0

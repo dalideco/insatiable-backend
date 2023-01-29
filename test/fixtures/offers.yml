@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  minimum_bid: 1
+  current_bid: 1
+  buy_now_price: 1
+
+two:
+  minimum_bid: 1
+  current_bid: 1
+  buy_now_price: 1
