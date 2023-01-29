@@ -5,4 +5,7 @@ class Offer < ApplicationRecord
 
   # many to one relationship with player
   belongs_to :player, class_name: 'player'
+
+  # many to one relationship with weapons
+  belongs_to :weapon, class_name: 'weapon'
 end
