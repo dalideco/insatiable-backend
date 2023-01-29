@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_26_205345) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_29_161031) do
   create_table "players", force: :cascade do |t|
     t.string "email", null: false
     t.string "password", null: false
@@ -18,6 +18,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_205345) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_players_on_email", unique: true
+  end
+
+  create_table "weapons", force: :cascade do |t|
+    t.string "image"
+    t.string "stats"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "variant", default: 0
   end
 
 end
