@@ -11,4 +11,7 @@ class Player < ApplicationRecord
   # relationship with packs
   has_many :own_packs, class_name: 'own_pack', dependent: :delete_all
   has_many :owned_packs, class_name: 'pack', through: :own_packs, source: :pack
+
+  # relationship with offers
+  has_many :offers, class_name: 'offer', dependent: :delete_all
 end
