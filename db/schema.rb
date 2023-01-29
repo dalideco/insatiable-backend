@@ -10,11 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_29_163526) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_29_165343) do
   create_table "offers", force: :cascade do |t|
     t.integer "minimum_bid", null: false
     t.integer "current_bid"
     t.integer "buy_now_price", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "packs", force: :cascade do |t|
+    t.integer "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
