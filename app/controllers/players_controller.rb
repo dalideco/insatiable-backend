@@ -9,9 +9,13 @@ class PlayersController < ApplicationController
   def create
     Rails.logger.info 'test'
     Rails.logger.info player_params
-    @player = Player.create(player_params)
-
-    render json: @player
+    @player = Player.new(player_params)
+    if @player.valid?
+      @player.save
+      render json: @player
+    else
+      render status: :bad_request, json: { 'messages' => @player.errors.messages }
+    end
   end
 
   def update
@@ -36,7 +40,8 @@ class PlayersController < ApplicationController
   end
 
   def existing_email(exception)
-    render status: :conflict, json: { 'error' => 'Email already exists', 'message' => exception.message }
+    render status: :conflict,
+           json: { 'error' => 'Email already exists', 'messages' => { 'email' => [exception.message] } }
     nil
   end
 end

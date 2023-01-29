@@ -1,7 +1,10 @@
 # player model
 class Player < ApplicationRecord
+  before_save :downcase_email
+
   # valdating
-  validates :email, presence: true, uniqueness: { case_sensitive: false, strict: ::ActiveRecord::RecordNotUnique }
+  validates :email, presence: true, uniqueness: { case_sensitive: false, strict: ::ActiveRecord::RecordNotUnique },
+                    format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true
 
   # relationshipt with weapons
@@ -14,4 +17,10 @@ class Player < ApplicationRecord
 
   # relationship with offers
   has_many :offers, dependent: :delete_all
+
+  private
+
+  def downcase_email
+    self.email = email.downcase
+  end
 end
