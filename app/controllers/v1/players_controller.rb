@@ -10,8 +10,8 @@ module V1
 
     def create
       Rails.logger.info 'test'
-      Rails.logger.info player_params
-      @player = Player.new(player_params)
+      Rails.logger.info player_create_params
+      @player = Player.new(player_create_params)
       if @player.valid?
         @player.save
         render json: @player
@@ -22,7 +22,7 @@ module V1
 
     def update
       player = Player.find(params[:id])
-      player.update(player_params)
+      player.update(player_update_params)
       render json: player
     end
 
@@ -35,9 +35,13 @@ module V1
 
     private
 
-    def player_params
+    def player_create_params
       params.require(:email)
       params.require(:password)
+      params.require(:player).permit(:email, :password)
+    end
+
+    def player_update_params
       params.require(:player).permit(:email, :password)
     end
 
