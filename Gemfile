@@ -74,3 +74,5 @@ end
 gem "rubocop-rails", "~> 2.17"
 
 gem "bcrypt", "~> 3.1"
+
+gem "jwt", "~> 2.6"
