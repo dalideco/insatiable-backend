@@ -7,5 +7,8 @@ Rails.application.routes.draw do
   # first version
   namespace :v1 do
     resources :players, only: %i[create index update destroy show]
+    scope 'auth' do
+      post 'login', controller: :auth, action: :login
+    end
   end
 end
