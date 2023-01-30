@@ -2,10 +2,14 @@
 module V1
   # Controller for players
   class PlayersController < ApplicationController
+    # Authentication
     before_action :authorize_request, except: %i[create]
+    # finding player
     before_action :find_player, except: %i[create index]
+    # checking if player has the right to update
     before_action :authorize_update, only: :update
 
+    # Email already exists rescue
     rescue_from ::ActiveRecord::RecordNotUnique, with: :existing_email
 
     def index
@@ -50,7 +54,6 @@ module V1
       nil
     end
 
-    # finds player first
     def find_player
       @player = Player.find_by!(id: params[:id])
     rescue ActiveRecord::RecordNotFound
@@ -59,6 +62,7 @@ module V1
 
     def authorize_update
       return unless @current_player.id != @player.id
+
       render status: :unauthorized, json: {
         error: 'Cannot update a different user'
       }
