@@ -4,5 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  resources :players, only: %i[create index update destroy show]
+  namespace :v1 do
+    resources :players, only: %i[create index update destroy show]
+  end
 end
