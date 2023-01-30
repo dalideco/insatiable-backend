@@ -34,7 +34,10 @@ module V1
     private
 
     def player_create_params
-      params.require(:player).permit(:email, :password, :password_confirmation)
+      params.require(:email)
+      params.require(:password)
+      params.require(:password_confirmation)
+      params.permit(:email, :password, :password_confirmation)
     end
 
     def player_update_params
