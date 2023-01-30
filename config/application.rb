@@ -24,5 +24,7 @@ module InsatiableBackend
     config.logger = Logger.new('log/important.log')
     # set the minimum log level
     config.log_level = :warn
+
+    config.api_only = true
   end
 end
