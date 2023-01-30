@@ -8,7 +8,6 @@ module V1
     # valdating
     validates :email, presence: true, uniqueness: { case_sensitive: false, strict: ::ActiveRecord::RecordNotUnique },
                       format: { with: URI::MailTo::EMAIL_REGEXP }
-    validates :password, presence: true
 
     # relationshipt with weapons
     has_many :owns, dependent: :delete_all
