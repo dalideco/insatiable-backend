@@ -2,6 +2,7 @@
 module V1
   # Controller for players
   class PlayersController < ApplicationController
+    before_action :authorize_request, except: %i[create]
     rescue_from ::ActiveRecord::RecordNotUnique, with: :existing_email
 
     def index

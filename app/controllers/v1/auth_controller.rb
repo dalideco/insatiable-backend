@@ -1,6 +1,9 @@
 module V1
   # authentication controller
   class AuthController < ApplicationController
+    before_action :authorize_request, except: :login
+
+    # login route
     def login
       @player = Player.find_by(email: login_params[:email])
 
