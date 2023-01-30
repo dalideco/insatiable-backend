@@ -9,8 +9,6 @@ module V1
     end
 
     def create
-      Rails.logger.info 'test'
-      Rails.logger.info player_create_params
       @player = Player.new(player_create_params)
       if @player.valid?
         @player.save
@@ -36,9 +34,7 @@ module V1
     private
 
     def player_create_params
-      params.require(:email)
-      params.require(:password)
-      params.require(:player).permit(:email, :password)
+      params.require(:player).permit(:email, :password, :password_confirmation)
     end
 
     def player_update_params

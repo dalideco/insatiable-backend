@@ -3,6 +3,8 @@ module V1
   class Player < ApplicationRecord
     before_save :downcase_email
 
+    has_secure_password
+
     # valdating
     validates :email, presence: true, uniqueness: { case_sensitive: false, strict: ::ActiveRecord::RecordNotUnique },
                       format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -18,6 +20,23 @@ module V1
 
     # relationship with offers
     has_many :offers, dependent: :delete_all
+
+    # confirming player
+    def confirm!
+      update(confirmed_at: Time.current)
+    end
+
+    def confirmed?
+      confirmed_at.present?
+    end
+
+    def generate_confirmation_token
+      signed_id expires_in: CONFIRMATION_TOKEN_EXPIRATION, purpose: :confirm_email
+    end
+
+    def unconfirmed?
+      !confirmed?
+    end
 
     private
 

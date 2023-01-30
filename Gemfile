@@ -72,3 +72,5 @@ group :test do
 end
 
 gem "rubocop-rails", "~> 2.17"
+
+gem "bcrypt", "~> 3.1"
