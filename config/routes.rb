@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :weapons, only: %i[create index show update destroy]
     resources :players, only: %i[create index update destroy show]
+    resources :owns, only: %i[create index show update destroy]
     scope 'auth' do
       post 'login', controller: :auth, action: :login
     end
