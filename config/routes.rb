@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     resources :weapons, only: %i[create index show update destroy]
     resources :players, only: %i[create index update destroy show]
     resources :owns, only: %i[create index show update destroy]
+    resources :packs, only: %i[create index show update destroy]
+    resources :own_packs, only: %i[create index show update destroy]
+
     scope 'auth' do
       post 'login', controller: :auth, action: :login
     end

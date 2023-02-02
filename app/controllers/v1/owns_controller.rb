@@ -28,7 +28,7 @@ module V1
 
     def update
       @own.update(own_update_params)
-      render @own
+      render json: @own
     end
 
     def destroy
