@@ -3,5 +3,8 @@ require: rubocop-rails
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Metrics/AbcSize: 
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/MethodLength:
   Enabled: false
