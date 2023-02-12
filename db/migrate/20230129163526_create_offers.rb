@@ -6,7 +6,7 @@ class CreateOffers < ActiveRecord::Migration[7.0]
       t.integer :current_bid
       t.integer :buy_now_price, null: false
 
-      t.timestamps
+      t.timestamps default: Time.current
     end
   end
 end

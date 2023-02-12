@@ -6,7 +6,7 @@ class CreateOwnPacks < ActiveRecord::Migration[7.0]
       t.integer :player_id
       t.integer :pack_id
 
-      t.timestamps
+      t.timestamps default: Time.current
     end
   end
 end

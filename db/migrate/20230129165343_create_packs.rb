@@ -4,7 +4,7 @@ class CreatePacks < ActiveRecord::Migration[7.0]
     create_table :packs do |t|
       t.integer :price, null: false
 
-      t.timestamps
+      t.timestamps default: Time.current
     end
   end
 end

@@ -7,7 +7,7 @@ class CreatePlayers < ActiveRecord::Migration[7.0]
       t.string :avatar, not_null: false
       t.datetime :confirmed_at, not_null: false
 
-      t.timestamps
+      t.timestamps default: Time.current
     end
   end
 end

@@ -5,7 +5,7 @@ class CreateWeapons < ActiveRecord::Migration[7.0]
       t.string :image
       t.string :stats
 
-      t.timestamps
+      t.timestamps default: Time.current
     end
   end
 end
