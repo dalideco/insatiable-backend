@@ -3,12 +3,7 @@ require 'test_helper'
 class PlayerTest < ActiveSupport::TestCase
   include V1
   setup do
-    player = Player.new(
-      email: 'test@insatiable.de',
-      password: 'test',
-      password_confirmation: 'test'
-    )
-    @player = player.save
+    @player = players(:one)
   end
 
   # Showing users

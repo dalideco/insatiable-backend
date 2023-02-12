@@ -11,6 +11,7 @@ class ActiveSupport::TestCase
   set_fixture_class owns: V1::Own
   set_fixture_class own_packs: V1::OwnPack
   set_fixture_class offers: V1::Offer
+  set_fixture_class players: V1::Player
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
