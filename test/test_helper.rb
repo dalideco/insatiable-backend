@@ -16,4 +16,9 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  setup do
+    @player = players(:one)
+    @player.save
+    @player_token = JsonWebToken.encode(player_id: @player.id)
+  end
 end

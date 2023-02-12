@@ -9,5 +9,8 @@ one:
   password_digest: "test" 
 # column: value
 #
-# two: {}
+two: 
+  email: "insatiable@test.de"
+  password_digest: "test" 
 # column: value
+

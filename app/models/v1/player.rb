@@ -37,6 +37,10 @@ module V1
       !confirmed?
     end
 
+    def as_json(**options)
+      super(**options).except('password_digest')
+    end
+
     private
 
     def downcase_email

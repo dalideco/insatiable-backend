@@ -13,13 +13,13 @@ module V1
     rescue_from ::ActiveRecord::RecordNotUnique, with: :existing_email
 
     def index
-      render json: Player.all
+      render json: Player.all.as_json
     end
 
     def create
       @player = Player.new(player_create_params)
       if @player.save
-        render json: @player
+        render json: @player.as_json
       else
         render status: :bad_request, json: { 'messages' => @player.errors.messages }
       end
@@ -27,11 +27,11 @@ module V1
 
     def update
       @player.update(player_update_params)
-      render json: @player
+      render json: @player.as_json
     end
 
     def show
-      render json: @player
+      render json: @player.as_json
     end
 
     # private methods

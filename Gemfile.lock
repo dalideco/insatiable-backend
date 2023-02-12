@@ -189,8 +189,6 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
-    ruby-debug-ide (0.7.3)
-      rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
     rubyzip (2.3.2)
     selenium-webdriver (4.8.0)
@@ -247,7 +245,6 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
   rubocop-rails (~> 2.17)
-  ruby-debug-ide
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
