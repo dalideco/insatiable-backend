@@ -4,8 +4,12 @@ one:
   minimum_bid: 1
   current_bid: 1
   buy_now_price: 1
+  created_at: <%= 5.day.ago.to_fs(:db) %>
+  updated_at: <%= 5.day.ago.to_fs(:db) %>
 
 two:
   minimum_bid: 1
   current_bid: 1
   buy_now_price: 1
+  created_at: <%= 5.day.ago.to_fs(:db) %>
+  updated_at: <%= 5.day.ago.to_fs(:db) %>

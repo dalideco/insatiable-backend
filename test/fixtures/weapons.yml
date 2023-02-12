@@ -3,7 +3,11 @@
 one:
   image: MyString
   stats: MyString
+  created_at: <%= 5.day.ago.to_fs(:db) %>
+  updated_at: <%= 5.day.ago.to_fs(:db) %>
 
 two:
   image: MyString
   stats: MyString
+  created_at: <%= 5.day.ago.to_fs(:db) %>
+  updated_at: <%= 5.day.ago.to_fs(:db) %>
