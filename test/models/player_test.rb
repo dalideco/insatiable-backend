@@ -2,8 +2,21 @@ require 'test_helper'
 
 class PlayerTest < ActiveSupport::TestCase
   include V1
+  setup do
+    player = Player.new(
+      email: 'test@insatiable.de',
+      password: 'test',
+      password_confirmation: 'test'
+    )
+    @player = player.save
+  end
 
-  # adding tests
+  # Showing users
+  test 'Players should not be null' do
+    assert_not_nil Player.all
+  end
+
+  # Creating user
   test 'Should not create player without email and password' do
     player = Player.new
     assert_not player.save
@@ -28,9 +41,14 @@ class PlayerTest < ActiveSupport::TestCase
   end
 
   test 'Should not create two players with same email' do
-    player = Player.new(email: 'test@test.test', password: 'test', password_confirmation: 'test')
-    assert player.save
-    player1 = Player.new(email: 'test@test.test', password: 'testing', password_confirmation: 'testing')
-    assert_not player1.save
+    player = Player.new(email: 'test@insatiable.de', password: 'testing', password_confirmation: 'testing')
+    assert_raises(::ActiveRecord::RecordNotUnique) do
+      player.save
+    end
+  end
+
+  # Show
+  test 'Should not show an inexistant player' do
+    assert @player
   end
 end
