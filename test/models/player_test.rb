@@ -3,7 +3,7 @@ require 'test_helper'
 class PlayerTest < ActiveSupport::TestCase
   include V1
 
-  # Create tests
+  # adding tests
   test 'Should not create player without email and password' do
     player = Player.new
     assert_not player.save
