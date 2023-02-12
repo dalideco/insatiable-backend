@@ -5,7 +5,7 @@ class PackTest < ActiveSupport::TestCase
     @pack = packs(:one)
   end
 
-  test 'testing fixtures' do
+  test 'verifying packs' do
     assert @pack
   end
 end

@@ -5,7 +5,7 @@ class OfferTest < ActiveSupport::TestCase
     @offer = offers(:one)
   end
 
-  test 'testing fixtures' do
+  test 'verifying offers' do
     assert @offer
   end
 end

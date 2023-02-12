@@ -5,7 +5,7 @@ class OwnTest < ActiveSupport::TestCase
     @own = owns(:one)
   end
 
-  test 'testing fixtures' do
+  test 'verifying player owns' do
     assert @own
   end
 end

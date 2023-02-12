@@ -5,7 +5,7 @@ class OwnPackTest < ActiveSupport::TestCase
     @own_pack = own_packs(:one)
   end
 
-  test 'testing fixtures' do
+  test 'verifying pack owns' do
     assert @own_pack
   end
 end

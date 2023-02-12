@@ -5,7 +5,7 @@ class WeaponTest < ActiveSupport::TestCase
     @weapon = weapons(:one)
   end
 
-  test 'testing fixtures' do
+  test 'verifying weapons' do
     assert @weapon
   end
 end
