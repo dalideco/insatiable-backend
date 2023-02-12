@@ -1,7 +1,11 @@
-require "test_helper"
+require 'test_helper'
 
 class WeaponTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @weapon = weapons(:one)
+  end
+
+  test 'testing fixtures' do
+    assert @weapon
+  end
 end

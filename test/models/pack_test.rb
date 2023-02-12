@@ -1,7 +1,11 @@
-require "test_helper"
+require 'test_helper'
 
 class PackTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @pack = packs(:one)
+  end
+
+  test 'testing fixtures' do
+    assert @pack
+  end
 end

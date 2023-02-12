@@ -1,7 +1,11 @@
 require "test_helper"
 
 class OwnTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @own = owns(:one)
+  end
+
+  test 'testing fixtures' do
+    assert @own
+  end
 end

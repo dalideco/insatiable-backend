@@ -1,7 +1,11 @@
-require "test_helper"
+require 'test_helper'
 
 class OfferTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @offer = offers(:one)
+  end
+
+  test 'testing fixtures' do
+    assert @offer
+  end
 end

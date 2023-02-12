@@ -1,7 +1,11 @@
-require "test_helper"
+require 'test_helper'
 
 class OwnPackTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @own_pack = own_packs(:one)
+  end
+
+  test 'testing fixtures' do
+    assert @own_pack
+  end
 end
