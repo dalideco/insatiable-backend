@@ -2,10 +2,6 @@
 
 one:
   price: 1
-  created_at: <%= 5.day.ago.to_fs(:db) %>
-  updated_at: <%= 5.day.ago.to_fs(:db) %>
 
 two:
   price: 1
-  created_at: <%= 5.day.ago.to_fs(:db) %>
-  updated_at: <%= 5.day.ago.to_fs(:db) %>
