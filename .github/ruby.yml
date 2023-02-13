@@ -9,8 +9,7 @@ on:
 jobs: 
   linters:
     runs-on: ubuntu-latest
-    name: Test on OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Running linters 
     steps: 
       # Step: Improve speed of running `apt-get` in CI.
       - name: "Disable certain `apt-get` triggers"
