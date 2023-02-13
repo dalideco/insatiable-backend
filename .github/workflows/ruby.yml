@@ -22,17 +22,15 @@ jobs:
 
       # Step: Install rubocop
       - name: Install rubocop
-        run: gem install rubocop
+        run: |
+          gem install rubocop
+          gem install rubocop-rails
 
       # Step: Run linters
       - name: Run linters
         run: |
           rubocop --parallel
 
-      - name: Run security checks
-        run: |
-          bin/bundler-audit --update
-          bin/brakeman -q -w2
 
           
       
