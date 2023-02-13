@@ -1,0 +1,35 @@
+name: Ruby CI
+
+on:
+  push:
+    branches: [ "staging", "production" ]
+  pull_request:
+    branches: [ "staging", "production" ]
+
+jobs: 
+  linters:
+    runs-on: ubuntu-latest
+    name: Test on OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    steps: 
+      # Step: Improve speed of running `apt-get` in CI.
+      - name: "Disable certain `apt-get` triggers"
+        uses: abbbi/github-actions-tune@v1
+
+      # Step: Check out the code.
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      # Step: install ruby 
+      - name: Install Ruby
+        uses: actions/setup-ruby@v1
+        with: 
+          ruby-version: 3.2.0
+          bundler-cache: true
+      
+      # Step: Run linters
+      - name: Run linters
+        run: |
+          bin/rubocop --parallel
+          
+      
