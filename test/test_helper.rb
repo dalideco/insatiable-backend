@@ -20,5 +20,6 @@ class ActiveSupport::TestCase
     @player = players(:one)
     @player.save
     @player_token = JsonWebToken.encode(player_id: @player.id)
+    @player_password = 'test'
   end
 end

@@ -13,7 +13,10 @@ module V1
         render json: { token:, exp: time.strftime('%m-%d-%Y %H:%M'),
                        email: @player.email }, status: :ok
       else
-        render status: :unauthorized, json: { 'error' => 'Unauthorized' }
+        render status: :unauthorized, json: {
+          'error' => 'Unauthorized',
+          'message' => 'Email or password incorrect'
+        }
       end
     end
 

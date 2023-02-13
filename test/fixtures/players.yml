@@ -4,13 +4,13 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: 
+one:
   email: "test@insatiable.de"
-  password_digest: "test" 
+  password_digest: "$2a$12$khzMLIywMpzydW1DTVFOu.KLAnO2Zg/OnxzWRa4ey/cYpSAUnryOq" #"test"
 # column: value
 #
-two: 
+two:
   email: "insatiable@test.de"
-  password_digest: "test" 
+  password_digest: "$2a$12$khzMLIywMpzydW1DTVFOu.KLAnO2Zg/OnxzWRa4ey/cYpSAUnryOq" #"test"
 # column: value
 
