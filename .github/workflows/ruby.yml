@@ -19,11 +19,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with: 
           bundler-cache: true
-      
+
+      # Step: Install rubocop
+      - name: Install rubocop
+        run: gem install rubocop
+
       # Step: Run linters
       - name: Run linters
         run: |
-          bin/rubocop --parallel
+          rubocop --parallel
 
       - name: Run security checks
         run: |
