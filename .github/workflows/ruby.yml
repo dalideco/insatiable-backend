@@ -9,7 +9,6 @@ on:
 jobs: 
   linters:
     runs-on: ubuntu-latest
-    name: Running linters 
     steps: 
       # Step: Improve speed of running `apt-get` in CI.
       - name: "Disable certain `apt-get` triggers"
@@ -23,7 +22,7 @@ jobs:
       - name: Install Ruby
         uses: actions/setup-ruby@v1
         with: 
-          ruby-version: 3.2.0
+          ruby-version: 3.2
           bundler-cache: true
       
       # Step: Run linters
