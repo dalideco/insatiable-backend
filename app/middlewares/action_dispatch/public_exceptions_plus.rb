@@ -4,7 +4,7 @@ module ActionDispatch
     def call(env)
       # puts "test"
       request = ActionDispatch::Request.new(env)
-      status = request.path_info[1..-1].to_i
+      status = request.path_info[1..].to_i
       content_type = request.formats.first
       # define here your custom format
       body = { errors: [{ status:,
