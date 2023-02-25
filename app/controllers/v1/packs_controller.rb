@@ -2,6 +2,7 @@ module V1
   # packs controller
   class PacksController < ApplicationController
     before_action :authorize_request, except: %i[create]
+    before_action :find_pack, except: %i[create index]
 
     def index
       render json: Pack.all
