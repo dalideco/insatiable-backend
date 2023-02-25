@@ -2,13 +2,14 @@
 module V1
   # Controller for players
   class PlayersController < ApplicationController
+    include PlayersControllerDocs
+
     # Authentication
     before_action :authorize_request, except: %i[create]
     # finding player
     before_action :find_player, except: %i[create index]
     # checking if player has the right to update
     before_action :authorize_update, only: :update
-
     # Email already exists rescue
     rescue_from ::ActiveRecord::RecordNotUnique, with: :existing_email
 
@@ -25,13 +26,14 @@ module V1
       end
     end
 
+    api :PATCH, '/players/:id'
+    param :id, :number, desc: 'id of the requested player'
+    description 'update an existing player'
     def update
       @player.update(player_update_params)
       render json: @player.as_json
     end
 
-    api :GET, '/players/:id'
-    param :id, :number, desc: 'id of the requested user'
     def show
       render json: @player.as_json
     end
@@ -59,7 +61,7 @@ module V1
     def find_player
       @player = Player.find_by!(id: params[:id])
     rescue ActiveRecord::RecordNotFound
-      render json: { errors: 'User not found' }, status: :not_found
+      render json: { errors: 'Player not found' }, status: :not_found
     end
 
     def authorize_update
