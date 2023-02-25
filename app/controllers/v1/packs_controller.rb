@@ -1,6 +1,8 @@
 module V1
   # packs controller
   class PacksController < ApplicationController
+    include PacksControllerDocs
+
     before_action :authorize_request, except: %i[create]
     before_action :find_pack, except: %i[create index]
 
@@ -32,6 +34,9 @@ module V1
         count: 1
       }
     end
+
+    # TODO: create this method
+    def buy; end
 
     private
 

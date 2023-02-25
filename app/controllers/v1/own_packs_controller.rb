@@ -2,6 +2,8 @@ module V1
   # own pack controller
   # own pack is the relationship between players and packs
   class OwnPacksController < ApplicationController
+    include OwnPacksControllerDocs
+
     before_action :authorize_request
     before_action :find_own_pack, except: %i[create index]
     before_action :allow_edit, only: %i[update destroy]
@@ -39,6 +41,9 @@ module V1
         message: "Deleted Item with id #{id}"
       }
     end
+
+    # TODO: create this method
+    def open; end
 
     private
 
