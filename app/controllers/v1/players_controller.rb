@@ -30,6 +30,8 @@ module V1
       render json: @player.as_json
     end
 
+    api :GET, '/players/:id'
+    param :id, :number, desc: 'id of the requested user'
     def show
       render json: @player.as_json
     end
