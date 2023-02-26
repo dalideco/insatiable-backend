@@ -22,6 +22,13 @@ module ActiveSupport
       @player.save
       @player_token = JsonWebToken.encode(player_id: @player.id)
       @player_password = 'test'
+
+      @second_player = players(:two)
+      @second_player_token = JsonWebToken.encode(player_id: @second_player.id)
+    end
+
+    def authenticate
+      @request.headers['AUTHORIZATION'] = "Bearer #{@player_token}"
     end
   end
 end
