@@ -6,7 +6,7 @@ module V1
 
     before_action :authorize_request
     before_action :find_own_pack, except: %i[create index]
-    before_action :allow_edit, only: %i[update destroy]
+    before_action :check_belongs_to_player, only: %i[update destroy open]
 
     def index
       render json: OwnPack.all
@@ -42,7 +42,7 @@ module V1
       }
     end
 
-    # TODO: create this method
+    # TODO: get random weapons
     def open; end
 
     private
@@ -55,7 +55,7 @@ module V1
       params.permit(:player_id, :pack_id)
     end
 
-    def allow_edit
+    def check_belongs_to_player
       return unless @current_player.id != @own_pack.player_id
 
       render status: :unauthorized, json: {
