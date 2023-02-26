@@ -1,6 +1,8 @@
 module V1
   # offers controller
   class OffersController < ApplicationController
+    include OffersControllerDocs
+
     before_action :authorize_request
     before_action :find_offer, except: %i[create index]
     before_action :check_player_owns_weapon, only: :create
@@ -17,7 +19,7 @@ module V1
         buy_now_price: offer_create_params[:buy_now_price]
       )
       if @offer.save
-        render json: @offer
+        render json: { success: true, offer: @offer }
       else
         render status: :bad_request, json: {
           message: @offer.errors.messages
