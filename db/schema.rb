@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_25_145536) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_26_180813) do
   create_table "offers", force: :cascade do |t|
     t.integer "minimum_bid", null: false
     t.integer "current_bid"
@@ -39,6 +39,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_25_145536) do
     t.integer "price", null: false
     t.datetime "created_at", default: "2023-02-26 17:22:40", null: false
     t.datetime "updated_at", default: "2023-02-26 17:22:40", null: false
+    t.string "title", default: "Pack"
+    t.integer "nbr_common_weapons", default: 0
+    t.integer "nbr_rare_weapons", default: 0
+    t.integer "nbr_very_rare_weapons", default: 0
+    t.integer "nbr_epic_weapons", default: 0
+    t.integer "nbr_legendary_weapons", default: 0
   end
 
   create_table "players", force: :cascade do |t|
