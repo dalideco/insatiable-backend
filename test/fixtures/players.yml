@@ -5,11 +5,13 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
+  id: 1
   email: "test@insatiable.de"
   password_digest: "$2a$12$khzMLIywMpzydW1DTVFOu.KLAnO2Zg/OnxzWRa4ey/cYpSAUnryOq" #"test"
 # column: value
 #
 two:
+  id: 2
   email: "insatiable@test.de"
   password_digest: "$2a$12$khzMLIywMpzydW1DTVFOu.KLAnO2Zg/OnxzWRa4ey/cYpSAUnryOq" #"test"
 # column: value
