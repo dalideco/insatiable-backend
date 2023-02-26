@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     resources :own_packs, only: %i[create index show update destroy]
     resources :offers, only: %i[create index show update]
 
+    # own_packs
+    post 'own_packs/:id/open', controller: :own_packs, action: :open
+
     scope 'auth' do
       post 'login', controller: :auth, action: :login
     end
