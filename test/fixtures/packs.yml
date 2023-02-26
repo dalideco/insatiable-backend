@@ -1,7 +1,26 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  price: 1
+  title: Regular pack
+  price: 500
+  nbr_common_weapons: 15
 
 two:
-  price: 1
+  title: Rare regular pack
+  price: 1500
+  nbr_common_weapons: 14
+  nbr_rare_weapons: 1
+
+three: 
+  title: Premium pack
+  price: 25000
+  nbr_rare_weapons: 14
+  nbr_very_rare_weapons: 1
+
+four:
+  title: Golden pack
+  price: 75000
+  nbr_rare_weapons: 10
+  nbr_very_rare_weapons: 4
+  nbr_epic_weapons: 1
+

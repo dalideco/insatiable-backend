@@ -1,11 +1,63 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+common_one:
   id: 1
   image: MyString
   stats: MyString
+  variant: 0
 
-two:
+common_two:
   id: 2
   image: MyString
   stats: MyString
+  variant: 0
+
+common_three:
+  image: MyString
+  stats: MyString
+  variant: 0
+
+common_four:
+  image: MyString
+  stats: MyString
+  variant: 0
+
+common_five:
+  image: MyString
+  stats: MyString
+  variant: 0
+
+common_six:
+  image: MyString
+  stats: MyString
+  variant: 0
+
+rare_one:
+  image: MyString
+  stats: MyString
+  variant: 1
+
+rare_two:
+  image: MyString
+  stats: MyString
+  variant: 1
+
+rare_three:
+  image: MyString
+  stats: MyString
+  variant: 1
+
+very_rare_one:
+  image: MyString
+  stats: MyString
+  variant: 2
+
+very_rare_two:
+  image: MyString
+  stats: MyString
+  variant: 2
+
+epic_one:
+  image: MyString
+  stats: MyString
+  variant: 3
