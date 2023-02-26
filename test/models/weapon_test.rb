@@ -2,7 +2,7 @@ require 'test_helper'
 
 class WeaponTest < ActiveSupport::TestCase
   setup do
-    @weapon = weapons(:one)
+    @weapon = weapons(:common_one)
   end
 
   test 'verifying weapons' do
