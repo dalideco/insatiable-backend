@@ -5,6 +5,7 @@ module V1
 
     before_action :authorize_request, except: %i[create]
     before_action :find_pack, except: %i[create index]
+    before_action :deduct_price, only: :buy
 
     def index
       render json: Pack.all
@@ -35,8 +36,23 @@ module V1
       }
     end
 
-    # TODO: create this method
-    def buy; end
+    # For player to buy a pack
+    def buy
+      own_pack = OwnPack.new(pack_id: params[:id],
+                             player_id: @current_player.id)
+
+      if own_pack.save
+        render json: {
+          'success' => true,
+          'own_pack' => own_pack
+        }
+      else
+        render status: :bad_request, json: {
+          'success' => false,
+          'errors' => own_pack.errors.messages
+        }
+      end
+    end
 
     private
 
@@ -49,6 +65,18 @@ module V1
     rescue ActiveRecord::RecordNotFound
       render status: :not_found, json: {
         error: 'Pack not found'
+      }
+    end
+
+    def deduct_price
+      price = @pack.price
+      balance = @current_player.coins
+
+      return unless balance < price
+
+      render status: :payment_required, json: {
+        'success' => false,
+        'errors' => 'Insufficient balance of coins'
       }
     end
   end

@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
     # own_packs
     post 'own_packs/:id/open', controller: :own_packs, action: :open
+    # buying a pack
+    post 'packs/:id/buy', controller: :packs, action: :buy
 
     scope 'auth' do
       post 'login', controller: :auth, action: :login
