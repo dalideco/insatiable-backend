@@ -23,7 +23,7 @@ module V1
       }
       assert_response :unauthorized
       json_response = JSON.parse(response.body)
-      assert_equal json_response, { 'errors' => 'Nil JSON web token' }
+      assert_equal json_response, { 'success' => false, 'errors' => 'Nil JSON web token' }
     end
 
     test 'Create: Should not have missing params' do

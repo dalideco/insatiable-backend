@@ -17,9 +17,9 @@ class ApplicationController < ActionController::API
       @decoded = JsonWebToken.decode(header)
       @current_player = V1::Player.find_by(id: @decoded[:player_id])
     rescue ActiveRecord::RecordNotFound => e
-      render json: { errors: e.message }, status: :unauthorized
+      render json: { success: false, errors: e.message }, status: :unauthorized
     rescue JWT::DecodeError => e
-      render json: { errors: e.message }, status: :unauthorized
+      render json: { success: false, errors: e.message }, status: :unauthorized
     end
   end
 end
