@@ -5,5 +5,5 @@ one:
   pack_id: 1
 
 two:
-  player_id: 1
-  pack_id: 1
+  player_id: 2
+  pack_id: 2
