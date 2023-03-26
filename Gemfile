@@ -79,3 +79,5 @@ gem 'bcrypt', '~> 3.1'
 gem 'jwt', '~> 2.6'
 
 gem 'apipie-rails', '~> 0.9.2'
+
+gem "rack-cors", "~> 2.0"
