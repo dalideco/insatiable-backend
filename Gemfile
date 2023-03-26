@@ -80,4 +80,4 @@ gem 'jwt', '~> 2.6'
 
 gem 'apipie-rails', '~> 0.9.2'
 
-gem "rack-cors", "~> 2.0"
+gem 'rack-cors', '~> 2.0'
