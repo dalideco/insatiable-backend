@@ -6,7 +6,7 @@ module V1
       @pack = packs(:one)
       @expensive_pack = packs(:four)
     end
-    test 'Buy: Should buy player' do
+    test 'Buy: Should buy pack' do
       authenticate
 
       # check that buy returns the right response

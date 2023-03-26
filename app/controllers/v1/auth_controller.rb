@@ -1,6 +1,8 @@
 module V1
   # authentication controller
   class AuthController < ApplicationController
+    include AuthControllerDocs
+
     before_action :authorize_request, except: :login
 
     # login route
