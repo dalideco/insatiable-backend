@@ -11,6 +11,9 @@ module PlayersControllerDocs
   description 'Signup or create a new player'
   error :conflict, 'Email already exists'
   error :bad_request, 'Bad parameters for user creation'
+  param :email, String, desc: 'email of the player'
+  param :password, String, desc: 'email of the player'
+  param :password_confirmation, String, desc: 'Password confirmation: has to be identical to password'
   returns code: :ok do
     property :id, String, desc: 'The player\'s id'
     property :email, String, desc: 'The players Email'
