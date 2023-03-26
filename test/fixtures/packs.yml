@@ -4,27 +4,29 @@ one:
   id: 1
   title: Regular pack
   price: 500
-  nbr_common_weapons: 15
+  chance_common_weapon: 90
+  chance_rare_weapon: 10
 
 two:
   id: 2
   title: Rare regular pack
   price: 1500
-  nbr_common_weapons: 14
-  nbr_rare_weapons: 1
+  chance_common_weapon: 60
+  chance_rare_weapon: 39
+  chance_very_rare_weapon: 1
 
-three: 
+three:
   id: 3
   title: Premium pack
   price: 25000
-  nbr_rare_weapons: 14
-  nbr_very_rare_weapons: 1
+  chance_rare_weapon: 60
+  chance_very_rare_weapon: 39
+  chance_epic_weapon: 1
 
 four:
   id: 4
   title: Golden pack
   price: 75000
-  nbr_rare_weapons: 10
-  nbr_very_rare_weapons: 4
-  nbr_epic_weapons: 1
-
+  chance_very_rare_weapon: 80
+  chance_epic_weapon: 19
+  chance_legendary_weapon: 1
