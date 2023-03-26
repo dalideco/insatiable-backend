@@ -25,7 +25,13 @@ module V1
         id: @own_pack.id
       }
 
+      response_body = JSON.parse(response.body)
+
       assert_response :unauthorized
+      assert_equal response_body, {
+        'success' => false,
+        'errors' => 'Nil JSON web token'
+      }
     end
     test 'Open: Should not open a pack that does not exist' do
       authenticate
@@ -42,8 +48,13 @@ module V1
       post :open, params: {
         id: @own_pack_not_owned.id
       }
+      response_body = JSON.parse(response.body)
 
       assert_response :unauthorized
+      assert_equal response_body, {
+        'success' => false,
+        'message' => "This item doesn't belong to the authenticated player"
+      }
     end
   end
 end

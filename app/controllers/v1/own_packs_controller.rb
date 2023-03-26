@@ -59,7 +59,8 @@ module V1
       return unless @current_player.id != @own_pack.player_id
 
       render status: :unauthorized, json: {
-        message: "This item doesn't belong to player #{@current_player.id}"
+        success: false,
+        message: "This item doesn't belong to the authenticated player"
       }
     end
 
@@ -67,6 +68,7 @@ module V1
       @own_pack = OwnPack.find_by!(id: params[:id])
     rescue ::ActiveRecord::RecordNotFound
       render status: :not_found, json: {
+        success: false,
         error: "Own with id #{params[:id]} not found"
       }
     end
