@@ -14,8 +14,8 @@ Rails.application.routes.draw do
     resources :own_packs, only: %i[create index show update destroy]
     resources :offers, only: %i[create index show update]
 
-    # own_packs
-    post 'own_packs/:id/open', controller: :own_packs, action: :open
+    # opening a pack
+    post 'players/:id/packs/:id', controller: :packs, action: :open
     # buying a pack
     post 'packs/:id/buy', controller: :packs, action: :buy
 
