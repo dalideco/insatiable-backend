@@ -22,6 +22,24 @@ module V1
       end
     end
 
+    def whoami
+      player = Player.find_by!(id: @current_player.id)
+      render json: {
+        success: true,
+        player: {
+          id: player.id,
+          email: player.email,
+          avatar: player.avatar,
+          coins: player.coins
+        }
+      }
+    rescue ActiveRecord::RecordNotFound
+      render status: :not_found, json: {
+        success: false,
+        error: 'player not found'
+      }
+    end
+
     private
 
     def login_params

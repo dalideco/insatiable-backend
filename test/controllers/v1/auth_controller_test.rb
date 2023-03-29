@@ -61,5 +61,22 @@ module V1
         'message' => 'Email or password incorrect'
       }
     end
+
+    test 'Whoami: Should fail without authentication' do
+      post :whoami
+
+      assert_response :unauthorized
+    end
+
+    test 'Whoami: Should return player data' do
+      authenticate
+      post :whoami
+      assert_response :success
+
+      response_body = JSON.parse(response.body)
+
+      assert_equal response_body['success'], true
+      assert_not_nil response_body['player']
+    end
   end
 end
