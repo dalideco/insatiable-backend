@@ -58,5 +58,45 @@ module V1
         'errors' => 'Insufficient balance of coins'
       }
     end
+
+    test 'index: Should get the player\'s packs' do
+      authenticate
+
+      get :index, params: {
+        player_id: @player.id
+      }
+
+      response_body = JSON.parse(response.body)
+      assert_response :success
+      assert_equal response_body, {
+        'success' => true,
+        'packs' => @player.owned_packs.as_json
+      }
+    end
+    test 'index: Should not get the packs for an unauthenticated player' do
+      get :index, params: {
+        player_id: @player.id
+      }
+
+      response_body = JSON.parse(response.body)
+      assert_response :unauthorized
+      assert_equal response_body, {
+        'success' => false,
+        'errors' => 'Nil JSON web token'
+      }
+    end
+    test 'index: Should not get the packs for a different player' do
+      authenticate
+      get :index, params: {
+        player_id: @second_player.id
+      }
+
+      response_body = JSON.parse(response.body)
+      assert_response :unauthorized
+      assert_equal response_body, {
+        'success' => false,
+        'errors' => 'Not allowed to view this player\'s packs'
+      }
+    end
   end
 end

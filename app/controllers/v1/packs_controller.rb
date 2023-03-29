@@ -7,9 +7,8 @@ module V1
     before_action :find_pack, except: %i[create index]
     before_action :deduct_price, only: :buy
 
-    def index
-      render json: Pack.all
-    end
+    # for nested routes
+    before_action :verify_same_player, only: :index
 
     def create
       @pack = Pack.new(pack_params)
@@ -36,6 +35,14 @@ module V1
       }
     end
 
+    ############# player nested
+    def index
+      render json: {
+        success: true,
+        packs: @current_player.owned_packs
+      }
+    end
+
     # For player to buy a pack
     def buy
       own_pack = OwnPack.new(pack_id: params[:id],
@@ -54,6 +61,7 @@ module V1
       end
     end
 
+    ########## private
     private
 
     def pack_params
@@ -77,6 +85,15 @@ module V1
       render status: :payment_required, json: {
         'success' => false,
         'errors' => 'Insufficient balance of coins'
+      }
+    end
+
+    def verify_same_player
+      return unless @current_player.id != params[:player_id].to_i
+
+      render status: :unauthorized, json: {
+        success: false,
+        errors: 'Not allowed to view this player\'s packs'
       }
     end
   end
