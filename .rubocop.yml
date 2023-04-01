@@ -11,3 +11,6 @@ Metrics/MethodLength:
 
 Style/RedundantFetchBlock:
   Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
