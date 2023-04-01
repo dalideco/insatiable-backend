@@ -1,6 +1,6 @@
 # Class for generating random with noise
-class Random
-  def random_with_probability(options)
+class CustomRandom
+  def self.random_with_probability(options)
     current = 0
     max = options.values.inject(:+)
     random_value = rand(max) + 1
