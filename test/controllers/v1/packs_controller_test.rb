@@ -59,10 +59,10 @@ module V1
       }
     end
 
-    test 'index: Should get the player\'s packs' do
+    test 'mine: Should get the player\'s packs' do
       authenticate
 
-      get :index, params: {
+      get :mine, params: {
         player_id: @player.id
       }
 
@@ -73,8 +73,8 @@ module V1
         'packs' => @player.owned_packs.as_json
       }
     end
-    test 'index: Should not get the packs for an unauthenticated player' do
-      get :index, params: {
+    test 'mine: Should not get the packs for an unauthenticated player' do
+      get :mine, params: {
         player_id: @player.id
       }
 
@@ -85,9 +85,9 @@ module V1
         'errors' => 'Nil JSON web token'
       }
     end
-    test 'index: Should not get the packs for a different player' do
+    test 'mine: Should not get the packs for a different player' do
       authenticate
-      get :index, params: {
+      get :mine, params: {
         player_id: @second_player.id
       }
 

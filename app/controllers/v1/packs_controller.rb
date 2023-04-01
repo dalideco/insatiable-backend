@@ -4,11 +4,18 @@ module V1
     include PacksControllerDocs
 
     before_action :authorize_request, except: %i[create]
-    before_action :find_pack, except: %i[create index]
+    before_action :find_pack, except: %i[create index mine]
     before_action :deduct_price, only: :buy
 
     # for nested routes
-    before_action :verify_same_player, only: :index
+    before_action :verify_same_player, only: :mine
+
+    def index
+      render json: {
+        success: true,
+        packs: Pack.all.as_json
+      }
+    end
 
     def create
       @pack = Pack.new(pack_params)
@@ -36,7 +43,7 @@ module V1
     end
 
     ############# player nested
-    def index
+    def mine
       render json: {
         success: true,
         packs: @current_player.owned_packs

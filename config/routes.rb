@@ -9,12 +9,13 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :weapons, only: %i[create index show update destroy]
     resources :players, only: %i[create index update destroy show] do
-      resources :packs, only: %i[index] do
+      resources :packs, only: %i[] do
         get 'open', controller: :packs, action: :open
       end
+      get 'packs', controller: :packs, action: :mine
     end
 
-    resources :packs, only: %i[create update destroy]
+    resources :packs, only: %i[index create update destroy]
     resources :owns, only: %i[create index show update destroy]
     resources :own_packs, only: %i[create index show update destroy]
     resources :offers, only: %i[create index show update]
