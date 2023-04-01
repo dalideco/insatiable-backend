@@ -4,12 +4,13 @@ module V1
     include PacksControllerDocs
 
     before_action :authorize_request, except: %i[create]
-    before_action :find_pack, except: %i[create index mine open]
+    before_action :find_pack, only: %i[show update destroy]
     before_action :deduct_price, only: :buy
 
     # for nested routes
     before_action :verify_same_player, only: %i[mine open]
     before_action :verify_player_owns_pack, only: :open
+    before_action :find_player_pack, only: :open
 
     def index
       render json: {
@@ -70,8 +71,32 @@ module V1
     end
 
     def open
+      # get packs chances
+      chances = {
+        'common' => @pack.chance_common_weapon,
+        'rare' => @pack.chance_rare_weapon,
+        'very_rare' => @pack.chance_very_rare_weapon,
+        'epic_weapon' => @pack.chance_epic_weapon,
+        'legendary_weapon' => @pack.chance_legendary_weapon
+      }
+
+      # pick the rarity to choose
+      rarity = CustomRandom.random_with_probability(chances)
+
+      # get random weapon with the chosen rarity
+      weapon = Weapon.where(variant: rarity).order('RANDOM()').limit(1).first
+
+      # assign the weapon to the player
+      own = Own.new(weapon_id: weapon.as_json['id'], player_id: @current_player.id)
+      own.save!
+
+      # remove pack from player's owned
+      @own_pack.delete
+
+      # render
       render json: {
-        test: 'test'
+        success: true,
+        weapon: weapon.as_json
       }
     end
 
@@ -117,6 +142,14 @@ module V1
       render status: :unauthorized, json: {
         success: false,
         errors: 'Cannot open an not owned pack'
+      }
+    end
+
+    def find_player_pack
+      @pack = Pack.find_by!(id: params[:pack_id])
+    rescue ActiveRecord::RecordNotFound
+      render status: :not_found, json: {
+        error: 'Pack not found'
       }
     end
   end

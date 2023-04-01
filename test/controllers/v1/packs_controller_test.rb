@@ -102,6 +102,27 @@ module V1
     end
 
     test 'Open: Should open a pack' do
+      authenticate
+
+      # getting own_pack
+      own_pack = OwnPack.find_by!(player_id: @player.id, pack_id: @pack.id)
+
+      # run open route
+      post :open, params: { player_id: @player.id, pack_id: @pack.id }
+      response_body = JSON.parse(response.body)
+      response_weapon = response_body['weapon']
+
+      # verify response
+      assert_response :success
+      assert_equal response_body['success'], true
+      assert_not_nil response_weapon
+
+      # verify weapon has been added to player
+      assert_includes @player.owned_weapons.as_json, response_weapon
+
+      # verify pack has been removed
+      searched_own_pack = OwnPack.find_by(id: own_pack.id)
+      assert_nil searched_own_pack
     end
     test 'Open: Should not open a pack when unauthenticated' do
       post :open, params: { player_id: @player.id, pack_id: @pack.id }
