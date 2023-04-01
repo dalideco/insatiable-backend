@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :weapons, only: %i[create index show update destroy]
     resources :players, only: %i[create index update destroy show] do
       resources :packs, only: %i[] do
-        get 'open', controller: :packs, action: :open
+        post 'open', controller: :packs, action: :open
       end
       get 'packs', controller: :packs, action: :mine
     end

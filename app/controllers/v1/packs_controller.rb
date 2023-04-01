@@ -4,11 +4,12 @@ module V1
     include PacksControllerDocs
 
     before_action :authorize_request, except: %i[create]
-    before_action :find_pack, except: %i[create index mine]
+    before_action :find_pack, except: %i[create index mine open]
     before_action :deduct_price, only: :buy
 
     # for nested routes
-    before_action :verify_same_player, only: :mine
+    before_action :verify_same_player, only: %i[mine open]
+    before_action :verify_player_owns_pack, only: :open
 
     def index
       render json: {
@@ -42,14 +43,6 @@ module V1
       }
     end
 
-    ############# player nested
-    def mine
-      render json: {
-        success: true,
-        packs: @current_player.owned_packs
-      }
-    end
-
     # For player to buy a pack
     def buy
       own_pack = OwnPack.new(pack_id: params[:id],
@@ -66,6 +59,20 @@ module V1
           'errors' => own_pack.errors.messages
         }
       end
+    end
+
+    ############# player nested
+    def mine
+      render json: {
+        success: true,
+        packs: @current_player.owned_packs
+      }
+    end
+
+    def open
+      render json: {
+        test: 'test'
+      }
     end
 
     ########## private
@@ -101,6 +108,15 @@ module V1
       render status: :unauthorized, json: {
         success: false,
         errors: 'Not allowed to view this player\'s packs'
+      }
+    end
+
+    def verify_player_owns_pack
+      @own_pack = OwnPack.find_by!(player_id: params[:player_id].to_i, pack_id: params[:pack_id].to_i)
+    rescue ::ActiveRecord::RecordNotFound
+      render status: :unauthorized, json: {
+        success: false,
+        errors: 'Cannot open an not owned pack'
       }
     end
   end
