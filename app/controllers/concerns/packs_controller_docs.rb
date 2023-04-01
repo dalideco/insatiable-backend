@@ -46,4 +46,27 @@ module PacksControllerDocs
     end
   end
   def buy; end
+
+  api :GET, '/players/:id/packs'
+  description "
+  Get packs owned by a specific player
+  "
+  error :unauthorized, 'Invalid token, or trying to get the packs of a different player'
+  meta Authorization: 'Bearer <%=access_token%>'
+  returns code: :ok do
+    property :success, [true, false], desct: 'Whether the method has succeeded'
+    property :data, Array, desc: 'Own Data object information' do
+      property :id, Integer
+      property :title, String
+      property :price, Integer
+      property :created_at, String
+      property :updated_at, String
+      property :chance_common_weapon, Integer
+      property :chance_rare_weapon, Integer
+      property :chance_very_rare_weapon, Integer
+      property :chance_epic_weapon, Integer
+      property :chance_legendary_weapon, Integer
+    end
+  end
+  def mine; end
 end
