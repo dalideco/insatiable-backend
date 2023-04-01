@@ -1,9 +1,11 @@
 require 'test_helper'
 
 module V1
+  # Controller tests for pack
   class PacksControllerTest < ActionController::TestCase
     setup do
       @pack = packs(:one)
+      @second_pack = packs(:two)
       @expensive_pack = packs(:four)
     end
     test 'Buy: Should buy pack' do
@@ -97,6 +99,38 @@ module V1
         'success' => false,
         'errors' => 'Not allowed to view this player\'s packs'
       }
+    end
+
+    test 'Open: Should open a pack' do
+    end
+    test 'Open: Should not open a pack when unauthenticated' do
+      post :open, params: { player_id: @player.id, pack_id: @pack.id }
+      response_body = JSON.parse(response.body)
+      assert_response :unauthorized
+      assert_equal response_body, {
+        success: false,
+        errors: 'Nil JSON web token'
+      }.as_json
+    end
+    test 'Open: Should not open a pack when not the same player' do
+      authenticate
+      post :open, params: { player_id: @second_player.id, pack_id: @second_pack.id }
+      response_body = JSON.parse(response.body)
+      assert_response :unauthorized
+      assert_equal response_body, {
+        success: false,
+        errors: 'Not allowed to view this player\'s packs'
+      }.as_json
+    end
+    test 'Open: Should not open a pack the player does not own' do
+      authenticate
+      post :open, params: { player_id: @player.id, pack_id: @expensive_pack.id }
+      response_body = JSON.parse(response.body)
+      assert_response :unauthorized
+      assert_equal response_body, {
+        success: false,
+        errors: 'Cannot open an not owned pack'
+      }.as_json
     end
   end
 end
