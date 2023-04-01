@@ -2,6 +2,30 @@
 module PacksControllerDocs
   extend Apipie::DSL::Concern
 
+  api :GET, '/packs'
+  description "
+  Fetch all packs.
+  Get all available packs for store purchase
+  "
+  error :unauthorized, 'Invalid token'
+  meta Authorization: 'Bearer <%=access_token%>'
+  returns code: :ok do
+    property :success, [true, false], desct: 'Whether the method has succeeded'
+    property :data, Array, desc: 'Own Data object information' do
+      property :id, Integer
+      property :title, String
+      property :price, Integer
+      property :created_at, String
+      property :updated_at, String
+      property :chance_common_weapon, Integer
+      property :chance_rare_weapon, Integer
+      property :chance_very_rare_weapon, Integer
+      property :chance_epic_weapon, Integer
+      property :chance_legendary_weapon, Integer
+    end
+  end
+  def index; end
+
   api :POST, '/packs/:id/buy'
   description "
   Enables player to buy a pack. \n
