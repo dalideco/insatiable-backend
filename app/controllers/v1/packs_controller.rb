@@ -4,7 +4,7 @@ module V1
     include PacksControllerDocs
 
     before_action :authorize_request, except: %i[create]
-    before_action :find_pack, only: %i[show update destroy]
+    before_action :find_pack, only: %i[show update destroy buy]
     before_action :deduct_price, only: :buy
 
     # for nested routes
