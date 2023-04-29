@@ -23,6 +23,10 @@ module V1
       assert_not_nil own_pack
       assert_equal own_pack.player_id, @player.id
       assert_equal own_pack.pack_id, @pack.id
+
+      # verify price has been deduced
+      player = Player.find_by!(id: @player.id)
+      assert_equal player.coins, @player.coins - @pack.price
     end
     test 'Buy: Should not buy an inexistant pack' do
       authenticate
