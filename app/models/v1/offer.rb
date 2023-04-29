@@ -11,14 +11,13 @@ module V1
     belongs_to :weapon
 
     enum :status, { added: 0, bid: 1, sold: 2 }
-    enum :lifetime, {
-      1.hour => 0,
-      3.hours => 1,
-      6.hours => 2,
-      12.hours => 3,
-      1.day => 4,
-      3.days => 5,
-      1.minute => 6
-    }
+    enum :lifetime, [
+      '1.hour',
+      '3.hours',
+      '6.hours',
+      '12.hours',
+      '1.day',
+      '3.days'
+    ]
   end
 end
