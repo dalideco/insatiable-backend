@@ -35,7 +35,7 @@ module V1
     end
 
     def show
-      render json: @player.as_json
+      render json: { success: true, player: @player.as_json }
     end
 
     # private methods

@@ -23,20 +23,13 @@ module V1
     end
 
     def whoami
-      player = Player.find_by!(id: @current_player.id)
+      player = @current_player.as_json
+      player['owned_weapons'] = @current_player.owned_weapons
+      player['owned_packs'] = @current_player.owned_packs
+
       render json: {
         success: true,
-        player: {
-          id: player.id,
-          email: player.email,
-          avatar: player.avatar,
-          coins: player.coins
-        }
-      }
-    rescue ActiveRecord::RecordNotFound
-      render status: :not_found, json: {
-        success: false,
-        error: 'player not found'
+        player:
       }
     end
 
