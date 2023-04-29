@@ -10,35 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_26_180813) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_29_204845) do
   create_table "offers", force: :cascade do |t|
     t.integer "minimum_bid", null: false
     t.integer "current_bid"
     t.integer "buy_now_price", null: false
-    t.datetime "created_at", default: "2023-03-26 19:46:12", null: false
-    t.datetime "updated_at", default: "2023-03-26 19:46:12", null: false
+    t.datetime "created_at", default: "2023-04-29 21:14:58", null: false
+    t.datetime "updated_at", default: "2023-04-29 21:14:58", null: false
     t.integer "player_id"
     t.integer "weapon_id"
+    t.integer "status", default: 0
+    t.integer "lifetime", default: 0
   end
 
   create_table "own_packs", force: :cascade do |t|
     t.integer "player_id"
     t.integer "pack_id"
-    t.datetime "created_at", default: "2023-03-26 19:46:12", null: false
-    t.datetime "updated_at", default: "2023-03-26 19:46:12", null: false
+    t.datetime "created_at", default: "2023-04-29 21:14:58", null: false
+    t.datetime "updated_at", default: "2023-04-29 21:14:58", null: false
   end
 
   create_table "owns", force: :cascade do |t|
     t.integer "player_id"
     t.integer "weapon_id"
-    t.datetime "created_at", default: "2023-03-26 19:46:12", null: false
-    t.datetime "updated_at", default: "2023-03-26 19:46:12", null: false
+    t.datetime "created_at", default: "2023-04-29 21:14:58", null: false
+    t.datetime "updated_at", default: "2023-04-29 21:14:58", null: false
   end
 
   create_table "packs", force: :cascade do |t|
     t.integer "price", null: false
-    t.datetime "created_at", default: "2023-03-26 19:46:12", null: false
-    t.datetime "updated_at", default: "2023-03-26 19:46:12", null: false
+    t.datetime "created_at", default: "2023-04-29 21:14:58", null: false
+    t.datetime "updated_at", default: "2023-04-29 21:14:58", null: false
     t.string "title", default: "Pack"
     t.integer "chance_common_weapon", default: 0
     t.integer "chance_rare_weapon", default: 0
@@ -52,8 +54,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_180813) do
     t.string "password_digest", null: false
     t.string "avatar"
     t.datetime "confirmed_at"
-    t.datetime "created_at", default: "2023-03-26 19:46:12", null: false
-    t.datetime "updated_at", default: "2023-03-26 19:46:12", null: false
+    t.datetime "created_at", default: "2023-04-29 21:14:58", null: false
+    t.datetime "updated_at", default: "2023-04-29 21:14:58", null: false
     t.integer "coins", default: 1000
     t.index ["email"], name: "index_players_on_email", unique: true
   end
@@ -61,8 +63,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_180813) do
   create_table "weapons", force: :cascade do |t|
     t.string "image"
     t.string "stats"
-    t.datetime "created_at", default: "2023-03-26 19:46:12", null: false
-    t.datetime "updated_at", default: "2023-03-26 19:46:12", null: false
+    t.datetime "created_at", default: "2023-04-29 21:14:58", null: false
+    t.datetime "updated_at", default: "2023-04-29 21:14:58", null: false
     t.integer "variant", default: 0
   end
 
