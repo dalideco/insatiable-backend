@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
     scope 'auth' do
       post 'login', controller: :auth, action: :login
-      post 'whoami', controller: :auth, action: :whoami
+      get 'whoami', controller: :auth, action: :whoami
     end
   end
 end
