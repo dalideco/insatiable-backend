@@ -119,12 +119,14 @@ module V1
       price = @pack.price
       balance = @current_player.coins
 
-      return unless balance < price
-
-      render status: :payment_required, json: {
-        'success' => false,
-        'errors' => 'Insufficient balance of coins'
-      }
+      if balance >= price
+        @current_player.update(coins: balance - price)
+      else
+        render status: :payment_required, json: {
+          'success' => false,
+          'errors' => 'Insufficient balance of coins'
+        }
+      end
     end
 
     def verify_same_player
