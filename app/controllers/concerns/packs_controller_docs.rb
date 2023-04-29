@@ -69,4 +69,18 @@ module PacksControllerDocs
     end
   end
   def mine; end
+
+  api :POST, '/players/:player_id/packs/:pack_id/open'
+  description "
+  Enables player to open a pack he owns. \n
+  a new own_pack object is created with the user_id and pack_id.
+  "
+  error :not_found, 'Pack Not Found'
+  error :unauthorized, 'Invalid token or different player or pack not owned'
+  meta Authorization: 'Bearer <%=access_token%>'
+  returns code: :ok do
+    property :success, [true, false], desc: 'Whether the pack was opened or not'
+    property :weapon, Hash, desc: 'obtained weapon'
+  end
+  def open; end
 end

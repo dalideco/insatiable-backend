@@ -6,7 +6,7 @@ module V1
 
     before_action :authorize_request
     before_action :find_own_pack, except: %i[create index]
-    before_action :check_belongs_to_player, only: %i[update destroy open]
+    before_action :check_belongs_to_player, only: %i[update destroy]
 
     def index
       render json: OwnPack.all
@@ -41,9 +41,6 @@ module V1
         message: "Deleted Item with id #{id}"
       }
     end
-
-    # TODO: get random weapons
-    def open; end
 
     private
 
