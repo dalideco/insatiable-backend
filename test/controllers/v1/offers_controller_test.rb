@@ -251,6 +251,10 @@ module V1
       own = Own.find_by!(player_id: @player.id, weapon_id: @offer_two.weapon_id)
       assert_not_nil own
 
+      # verify offer is sold
+      offer = Offer.find_by!(id: @offer_two.id)
+      assert_equal offer.sold?, true
+
       # verify price has been deducted
       player = Player.find_by!(id: @player.id)
       assert_equal player.coins, @player.coins - @offer_two.buy_now_price
