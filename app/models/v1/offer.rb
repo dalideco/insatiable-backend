@@ -10,6 +10,8 @@ module V1
     # many to one relationship with weapons
     belongs_to :weapon
 
+    belongs_to :latest_bidder, class_name: 'Player', optional: true
+
     enum :status, { added: 0, bid: 1, sold: 2, expired: 3 }
     enum :lifetime, [
       '1.hour',
