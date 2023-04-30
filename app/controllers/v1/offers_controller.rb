@@ -166,8 +166,18 @@ module V1
         }
         nil
       else
-        @current_player.update(coins: @current_player.coins - @offer.buy_now_price)
-        @offer.player.update(coins: @offer.player.coins + @offer.buy_now_price)
+        ActiveRecord::Base.transaction do
+          @current_player.update(coins: @current_player.coins - @offer.buy_now_price)
+          @offer.player.update(coins: @offer.player.coins + @offer.buy_now_price)
+
+          Rails.logger.info(
+            "offer #{@offer.id}: coins transfered from player #{@current_player.id} to #{@offer.player.id}"
+          )
+        rescue ActiveRecord::RecordInvalid
+          Rails.logger.error(
+            "offer #{@offer.id}: failed to transfer coins from player #{@current_player.id} to #{@offer.player.id}"
+          )
+        end
       end
     end
   end
