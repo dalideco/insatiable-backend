@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :owns, only: %i[create index show update destroy]
     resources :own_packs, only: %i[create index show update destroy]
     resources :offers, only: %i[create index show update]
+    patch 'offers/:id/bid', controller: :offers, action: :bid
 
     # opening a pack
     # post 'players/:id/packs/:pack_id', controller: :players, action: :open
