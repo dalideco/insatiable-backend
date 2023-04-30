@@ -137,14 +137,14 @@ module V1
           success: false,
           error: 'Entered bid price is higher than the buy now price'
         }
+      else
+        return unless bid_params[:bid].to_i <= current_bid || bid_params[:bid].to_i < @offer.minimum_bid
+
+        render status: :conflict, json: {
+          success: false,
+          error: 'Entered bid price is lower than the minimum'
+        }
       end
-
-      return unless bid_params[:bid].to_i <= current_bid || bid_params[:bid].to_i < @offer.minimum_bid
-
-      render status: :conflict, json: {
-        success: false,
-        error: 'Entered bid price is lower than the minimum'
-      }
     end
 
     def deduct_bid_price
@@ -164,6 +164,7 @@ module V1
           success: false,
           error: 'Insufficient balance'
         }
+        nil
       else
         @current_player.update(coins: @current_player.coins - @offer.buy_now_price)
         @offer.player.update(coins: @offer.player.coins + @offer.buy_now_price)
