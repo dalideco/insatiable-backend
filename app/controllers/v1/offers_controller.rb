@@ -11,6 +11,8 @@ module V1
     before_action :verify_not_expired, only: :bid
     before_action :verify_bid_price, only: :bid
 
+    before_action :deduct_bid_price, only: :bid
+
     def index
       render json: Offer.all
     end
@@ -120,6 +122,15 @@ module V1
       }
     end
 
-    
+    def deduct_bid_price
+      if @current_player.coins < bid_params[:bid].to_i
+        render status: :conflict, json: {
+          success: false,
+          error: 'Insufficient balance'
+        }
+      else
+        @current_player.update(coins: @current_player.coins - bid_params[:bid].to_i)
+      end
+    end
   end
 end

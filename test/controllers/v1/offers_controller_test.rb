@@ -97,6 +97,10 @@ module V1
       offer_two = Offer.find_by!(id: @offer_two.id)
       assert_equal offer_two.current_bid, 200
       assert_equal offer_two.bid?, true
+
+      # verify price has been decucted
+      player = Player.find_by!(id: @player.id)
+      assert_equal player.coins, @player.coins - 200
     end
 
     test 'Bid: Player should not be able to bid when unauthenticated' do
