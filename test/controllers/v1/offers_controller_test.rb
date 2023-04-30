@@ -7,7 +7,8 @@ module V1
       post :create, params: {
         minimum_bid: 500,
         buy_now_price: 800,
-        weapon_id: 1
+        weapon_id: 1,
+        lifetime: '1.hour'
       }
       assert_response :ok
       json_response = JSON.parse(response.body)
