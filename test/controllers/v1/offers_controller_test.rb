@@ -4,6 +4,10 @@ module V1
   class OffersControllerTest < ActionController::TestCase
     setup do
       @offer = offers(:one)
+      @offer_two = offers(:two)
+      @offer_expired = offers(:expired)
+      @offer_sold = offers(:sold)
+      @offer_expensive = offers(:expensive)
     end
 
     test 'Create: should create an offer' do
@@ -75,6 +79,138 @@ module V1
       assert_equal json_response, { 'success' => false, 'error' => "Player doesn't own weapon" }
     end
 
-    
+    # Bidding
+    test 'Bid: Should bid on an offer' do
+      authenticate
+      patch :bid, params: {
+        id: @offer_two.id,
+        bid: 200
+      }
+
+      # verify response
+      assert_response :ok
+      json_response = JSON.parse(response.body)
+      assert_equal json_response['success'], true
+      assert_equal json_response['offer']['id'], @offer_two.id
+
+      # verify bid added
+      offer_two = Offer.find_by!(id: @offer_two.id)
+      assert_equal offer_two.current_bid, 200
+      assert_equal offer_two.bid?, true
+    end
+
+    test 'Bid: Player should not be able to bid when unauthenticated' do
+      patch :bid, params: {
+        id: @offer.id,
+        bid: 200
+      }
+      assert_response :unauthorized
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'errors' => 'Nil JSON web token'
+      }
+    end
+
+    test 'Bid: Player should not be able to bid on his offer' do
+      authenticate
+      patch :bid, params: {
+        id: @offer.id,
+        bid: 200
+      }
+      assert_response :conflict
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'Player cannot bid on his offer'
+      }
+    end
+
+    test 'Bid: Player should not be able to bid on an expired offer' do
+      # Expired
+      authenticate
+      patch :bid, params: {
+        id: @offer_expired.id,
+        bid: 200
+      }
+      assert_response :not_acceptable
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'The offer is expired'
+      }
+
+      # Sold
+      authenticate
+      patch :bid, params: {
+        id: @offer_sold.id,
+        bid: 200
+      }
+      assert_response :not_acceptable
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'The offer is expired'
+      }
+    end
+
+    test 'Bid: Player should not be able to bid with less than the min price' do
+      authenticate
+      patch :bid, params: {
+        id: @offer_two.id,
+        bid: 50
+      }
+      assert_response :conflict
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'Entered bid price is lower than the minimum'
+      }
+    end
+
+    test 'Bid: Player should not be able to bid with less than the current bid' do
+      # first bid
+      authenticate
+      patch :bid, params: {
+        id: @offer_two.id,
+        bid: 200
+      }
+      assert_response :ok
+
+      # second bid
+      authenticate
+      patch :bid, params: {
+        id: @offer_two.id,
+        bid: 200
+      }
+      assert_response :conflict
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'Entered bid price is lower than the minimum'
+      }
+    end
+
+    test 'Bid: Player should not be able to bid with more than balance' do
+      authenticate
+      patch :bid, params: {
+        id: @offer_expensive.id,
+        bid: 1100
+      }
+
+      # verify response
+      assert_response :conflict
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'Insufficient balance'
+      }
+    end
   end
 end

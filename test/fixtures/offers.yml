@@ -1,15 +1,33 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  minimum_bid: 1
-  current_bid: 1
-  buy_now_price: 1
+  minimum_bid: 100
+  buy_now_price: 300
   player_id: 1
   weapon_id: 1
 
 two:
-  minimum_bid: 1
-  current_bid: 1
-  buy_now_price: 1
-  player_id: 1
-  weapon_id: 1
+  minimum_bid: 100
+  buy_now_price: 300
+  player_id: 2
+  weapon_id: 2
+
+expired:
+  minimum_bid: 100
+  buy_now_price: 300
+  player_id: 2
+  weapon_id: 2
+  status: 3
+
+sold:
+  minimum_bid: 100
+  buy_now_price: 300
+  player_id: 2
+  weapon_id: 2
+  status: 2
+
+expensive:
+  minimum_bid: 1000
+  buy_now_price: 1300
+  player_id: 2
+  weapon_id: 2
