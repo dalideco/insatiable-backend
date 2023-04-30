@@ -6,6 +6,7 @@ module V1
     before_action :authorize_request
     before_action :find_offer, except: %i[create index]
     before_action :remove_from_owned_weapons, only: :create
+    before_action :verify_not_expired, only: :bid
 
     def index
       render json: Offer.all
@@ -26,7 +27,7 @@ module V1
         Rails.logger.info("runnig cleanup after #{lifetime} ")
 
         # adding job to clean offer to queue
-        OfferCleanupJob.set(wait: lifetime).perform_later
+        OfferCleanupJob.set(wait: lifetime).perform_later(@offer.id)
 
         # rendering created offer
         render json: { success: true, offer: @offer }
@@ -39,6 +40,16 @@ module V1
 
     def show
       render json: @offer
+    end
+
+    def bid
+      puts bid_params[:bid]
+      @offer.update(current_bid: bid_params[:bid])
+
+      render json: {
+        success: true,
+        offer: @offer.as_json
+      }
     end
 
     def update
@@ -59,6 +70,11 @@ module V1
       params.permit(:current_bid)
     end
 
+    def bid_params
+      params.require(:bid)
+      params.permit(:bid)
+    end
+
     def find_offer
       @offer = Offer.find_by!(id: params[:id])
     rescue ActiveRecord::RecordNotFound
@@ -77,6 +93,14 @@ module V1
       render status: :not_found, json: {
         success: false,
         error: "Player #{@current_player.id} does not own weapon #{weapon_id}"
+      }
+    end
+
+    def verify_not_expired
+      return unless @offer.expired?
+
+      render status: :conflict, json: {
+        error: 'The offer is expired'
       }
     end
   end
