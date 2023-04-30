@@ -32,4 +32,33 @@ module OffersControllerDocs
     end
   end
   def create; end
+
+  api :PATCH, '/offers/:id/bid'
+  meta Authorization: 'Bearer <%=access_token%>'
+  error :bad_request, 'Missing parameter'
+  error :not_found, 'Offer not found'
+  error :conflict, 'Player cannot bid on his offer'
+  error :not_acceptable, 'The offer is expired'
+  error :conflict, 'Entered bid price is higher than the buy now price or lower than minimum/current price'
+  error :payment_required, 'Insufficient balance'
+  param :bid, :number, required: true
+  returns code: :ok do
+    property :success, [true, false], desc: 'Whether the creationg was successful'
+    property :offer, Hash, desc: 'The offer after bidding'
+  end
+  def bid; end
+
+  api :PATCH, '/offers/:id/buy'
+  meta Authorization: 'Bearer <%=access_token%>'
+  error :bad_request, 'Missing parameter'
+  error :not_found, 'Offer not found'
+  error :conflict, 'Player cannot buy this offer'
+  error :not_acceptable, 'The offer is expired'
+  error :payment_required, 'insufficient balance'
+  param :bid, :number, required: true
+  returns code: :ok do
+    property :success, [true, false], desc: 'Whether the creationg was successful'
+    property :weapon, Hash, desc: 'The obtained'
+  end
+  def buy; end
 end
