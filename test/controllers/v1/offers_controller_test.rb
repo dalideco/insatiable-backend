@@ -20,7 +20,8 @@ module V1
       post :create, params: {
         minimum_bid: 500,
         buy_now_price: 800,
-        weapon_id: 1
+        weapon_id: 1,
+        lifetime: '1.hour'
       }
       assert_response :unauthorized
       json_response = JSON.parse(response.body)
@@ -31,7 +32,8 @@ module V1
       authenticate
       post :create, params: {
         minimum_bid: 500,
-        weapon_id: 1
+        weapon_id: 1,
+        lifetime: '1.hour'
       }
       assert_response :bad_request
       json_response = JSON.parse(response.body)
@@ -46,11 +48,12 @@ module V1
       post :create, params: {
         minimum_bid: 500,
         buy_now_price: 800,
-        weapon_id: 1
+        weapon_id: 1,
+        lifetime: '1.hour'
       }
       # assert_response :ok
       json_response = JSON.parse(response.body)
-      assert_equal json_response, { 'error' => 'Player 2 does not own weapon 1' }
+      assert_equal json_response, { 'success' => false, 'error' => 'Player 2 does not own weapon 1' }
     end
   end
 end
