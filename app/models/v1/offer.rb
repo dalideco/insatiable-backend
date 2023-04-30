@@ -10,14 +10,19 @@ module V1
     # many to one relationship with weapons
     belongs_to :weapon
 
-    enum :status, { added: 0, bid: 1, sold: 2 }
+    enum :status, { added: 0, bid: 1, sold: 2, expired: 3 }
     enum :lifetime, [
       '1.hour',
       '3.hours',
       '6.hours',
       '12.hours',
       '1.day',
-      '3.days'
+      '3.days',
+      '30.seconds'
     ]
+
+    before_update do |offer|
+      offer.status = :bid if current_bid_changed?
+    end
   end
 end
