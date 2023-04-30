@@ -2,7 +2,13 @@ require 'test_helper'
 
 module V1
   class OffersControllerTest < ActionController::TestCase
+    setup do
+      @offer = offers(:one)
+    end
+
     test 'Create: should create an offer' do
+      own = Own.find_by!(player_id: @player.id, weapon_id: 1)
+
       authenticate
       post :create, params: {
         minimum_bid: 500,
@@ -12,8 +18,21 @@ module V1
       }
       assert_response :ok
       json_response = JSON.parse(response.body)
+      response_weapon = json_response['offer']
       assert_equal json_response['success'], true
-      assert_not_nil json_response['offer']
+      assert_not_nil response_weapon
+
+      # check weapon has been removed from player's owns
+      new_own = Own.find_by(player_id: @player.id, weapon_id: 1)
+      assert_not_equal new_own.id, own.id unless new_own.nil?
+
+      # check offer has been created
+      offer = Offer.find_by(id: response_weapon['id'])
+      assert_not_nil offer
+      assert_equal offer.minimum_bid, 500
+      assert_equal offer.buy_now_price, 800
+      assert_equal offer.weapon_id, 1
+      assert_equal offer.lifetime, '1.hour'
     end
 
     test 'Create: Should not create an offer when not authenticated' do
@@ -53,7 +72,9 @@ module V1
       }
       # assert_response :ok
       json_response = JSON.parse(response.body)
-      assert_equal json_response, { 'success' => false, 'error' => 'Player 2 does not own weapon 1' }
+      assert_equal json_response, { 'success' => false, 'error' => "Player doesn't own weapon" }
     end
+
+    
   end
 end
