@@ -114,6 +114,13 @@ module V1
       current_bid = @offer.current_bid
       current_bid || current_bid = 0
 
+      if bid_params[:bid].to_i >= @offer.buy_now_price
+        render status: :conflict, json: {
+          success: false,
+          error: 'Entered bid price is higher than the buy now price'
+        }
+      end
+
       return unless bid_params[:bid].to_i <= current_bid || bid_params[:bid].to_i < @offer.minimum_bid
 
       render status: :conflict, json: {

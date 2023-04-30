@@ -201,6 +201,22 @@ module V1
       }
     end
 
+    test 'Bid: Player should not be able to bid with more than the buy now price' do
+      # first bid
+      authenticate
+      patch :bid, params: {
+        id: @offer_two.id,
+        bid: 400
+      }
+      assert_response :conflict
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'Entered bid price is higher than the buy now price'
+      }
+    end
+
     test 'Bid: Player should not be able to bid with more than balance' do
       authenticate
       patch :bid, params: {
