@@ -97,6 +97,7 @@ module V1
       offer_two = Offer.find_by!(id: @offer_two.id)
       assert_equal offer_two.current_bid, 200
       assert_equal offer_two.bid?, true
+      assert_equal offer_two.latest_bidder.id, @player.id
 
       # verify price has been decucted
       player = Player.find_by!(id: @player.id)

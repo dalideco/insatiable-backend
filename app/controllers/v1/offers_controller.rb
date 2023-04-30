@@ -50,7 +50,7 @@ module V1
     end
 
     def bid
-      @offer.update(current_bid: bid_params[:bid])
+      @offer.update(current_bid: bid_params[:bid], latest_bidder_id: @current_player.id)
 
       render json: {
         success: true,
