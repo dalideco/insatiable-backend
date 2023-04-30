@@ -225,7 +225,93 @@ module V1
       }
 
       # verify response
+      assert_response :payment_required
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'Insufficient balance'
+      }
+    end
+
+    test 'Buy: Player should be able to buy an offer' do
+      offer_player = Player.find_by!(id: @offer_two.player_id)
+
+      authenticate
+      post :buy, params: {
+        id: @offer_two.id
+      }
+
+      assert_response :ok
+      json_response = JSON.parse(response.body)
+      assert_equal json_response['success'], true
+      assert_not_nil json_response['weapon']
+      assert_equal json_response['weapon']['id'], @offer_two.weapon_id
+
+      # verify player now owns weapon
+      own = Own.find_by!(player_id: @player.id, weapon_id: @offer_two.weapon_id)
+      assert_not_nil own
+
+      # verify price has been deducted
+      player = Player.find_by!(id: @player.id)
+      assert_equal player.coins, @player.coins - @offer_two.buy_now_price
+
+      # verify offer player has added the price
+      new_offer_player = Player.find_by!(id: @offer_two.player_id)
+      assert_equal new_offer_player.coins, offer_player.coins + @offer_two.buy_now_price
+    end
+
+    test 'Buy: Player should not buy when unauthenticated' do
+      post :buy, params: {
+        id: @offer_two.id
+      }
+
+      assert_response :unauthorized
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'errors' => 'Nil JSON web token'
+      }
+    end
+
+    test 'Buy: Player should not buy his own offer' do
+      authenticate
+      post :buy, params: {
+        id: @offer.id
+      }
+
       assert_response :conflict
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'Player cannot bid on his offer'
+      }
+    end
+
+    test 'Buy: Player should not buy an expired offer' do
+      authenticate
+      post :buy, params: {
+        id: @offer_expired.id
+      }
+
+      assert_response :not_acceptable
+
+      json_response = JSON.parse(response.body)
+      assert_equal json_response, {
+        'success' => false,
+        'error' => 'The offer is expired'
+      }
+    end
+
+    test 'Buy: Player should have enough coins to buy' do
+      authenticate
+      post :buy, params: {
+        id: @offer_expensive.id
+      }
+
+      assert_response :payment_required
+
       json_response = JSON.parse(response.body)
       assert_equal json_response, {
         'success' => false,

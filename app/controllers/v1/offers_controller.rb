@@ -7,11 +7,13 @@ module V1
     before_action :find_offer, except: %i[create index]
     before_action :remove_from_owned_weapons, only: :create
 
-    before_action :verify_not_offer_owner, only: :bid
-    before_action :verify_not_expired, only: :bid
-    before_action :verify_bid_price, only: :bid
+    before_action :verify_not_offer_owner, only: %i[bid buy]
+    before_action :verify_not_expired, only: %i[bid buy]
 
+    before_action :verify_bid_price, only: :bid
     before_action :deduct_bid_price, only: :bid
+
+    before_action :buy_transaction, only: :buy
 
     def index
       render json: Offer.all
@@ -53,6 +55,22 @@ module V1
       render json: {
         success: true,
         offer: @offer.as_json
+      }
+    end
+
+    def buy
+      @offer.update(status: :sold)
+
+      own = Own.new(
+        player_id: @current_player.id,
+        weapon_id: @offer.weapon.id
+      )
+
+      own.save!
+
+      render json: {
+        success: true,
+        weapon: @offer.weapon
       }
     end
 
@@ -131,12 +149,24 @@ module V1
 
     def deduct_bid_price
       if @current_player.coins < bid_params[:bid].to_i
-        render status: :conflict, json: {
+        render status: :payment_required, json: {
           success: false,
           error: 'Insufficient balance'
         }
       else
         @current_player.update(coins: @current_player.coins - bid_params[:bid].to_i)
+      end
+    end
+
+    def buy_transaction
+      if @current_player.coins < @offer.buy_now_price
+        render status: :payment_required, json: {
+          success: false,
+          error: 'Insufficient balance'
+        }
+      else
+        @current_player.update(coins: @current_player.coins - @offer.buy_now_price)
+        @offer.player.update(coins: @offer.player.coins + @offer.buy_now_price)
       end
     end
   end
