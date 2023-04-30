@@ -7,6 +7,7 @@ module V1
     before_action :find_offer, except: %i[create index]
     before_action :remove_from_owned_weapons, only: :create
     before_action :verify_not_expired, only: :bid
+    before_action :verify_bid_price, only: :bid
 
     def index
       render json: Offer.all
@@ -43,7 +44,6 @@ module V1
     end
 
     def bid
-      puts bid_params[:bid]
       @offer.update(current_bid: bid_params[:bid])
 
       render json: {
@@ -99,8 +99,19 @@ module V1
     def verify_not_expired
       return unless @offer.expired?
 
-      render status: :conflict, json: {
+      render status: :expired, json: {
         error: 'The offer is expired'
+      }
+    end
+
+    def verify_bid_price
+      current_bid = @offer.current_bid
+      current_bid || current_bid = 0
+
+      return unless bid_params[:bid].to_i <= current_bid || bid_params[:bid].to_i < @offer.minimum_bid
+
+      render status: :conflict, json: {
+        error: 'Entered bid price is lower than the minimum'
       }
     end
   end
