@@ -15,5 +15,5 @@ Style/RedundantFetchBlock:
 Metrics/ClassLength:
   Enabled: false
 
-convention:Metrics/CyclomaticComplexity:
+Metrics/CyclomaticComplexity:
   Enabled: false

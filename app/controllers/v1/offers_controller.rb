@@ -6,6 +6,8 @@ module V1
     before_action :authorize_request
     before_action :find_offer, except: %i[create index]
     before_action :remove_from_owned_weapons, only: :create
+
+    before_action :verify_not_offer_owner, only: :bid
     before_action :verify_not_expired, only: :bid
     before_action :verify_bid_price, only: :bid
 
@@ -52,10 +54,6 @@ module V1
       }
     end
 
-    def update
-      @offer.update(offer_update_params)
-    end
-
     private
 
     def offer_create_params
@@ -64,10 +62,6 @@ module V1
       params.require(:weapon_id)
       params.require(:lifetime)
       params.permit(:minimum_bid, :buy_now_price, :weapon_id, :lifetime)
-    end
-
-    def offer_update_params
-      params.permit(:current_bid)
     end
 
     def bid_params
@@ -92,14 +86,24 @@ module V1
     rescue ActiveRecord::RecordNotFound
       render status: :not_found, json: {
         success: false,
-        error: "Player #{@current_player.id} does not own weapon #{weapon_id}"
+        error: "Player doesn't own weapon"
+      }
+    end
+
+    def verify_not_offer_owner
+      return unless @offer.player_id == @current_player.id
+
+      render status: :conflict, json: {
+        success: false,
+        error: 'Player cannot bid on his offer'
       }
     end
 
     def verify_not_expired
-      return unless @offer.expired?
+      return unless @offer.expired? || @offer.sold?
 
-      render status: :expired, json: {
+      render status: :not_acceptable, json: {
+        success: false,
         error: 'The offer is expired'
       }
     end
@@ -111,8 +115,11 @@ module V1
       return unless bid_params[:bid].to_i <= current_bid || bid_params[:bid].to_i < @offer.minimum_bid
 
       render status: :conflict, json: {
+        success: false,
         error: 'Entered bid price is lower than the minimum'
       }
     end
+
+    
   end
 end
