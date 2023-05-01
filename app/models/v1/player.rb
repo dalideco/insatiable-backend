@@ -19,6 +19,12 @@ module V1
 
     # relationship with offers
     has_many :offers, dependent: :delete_all
+    # relationship with offers user has bid on
+    has_many :bidded_offers,
+             foreign_key: 'latest_bidder_id',
+             inverse_of: :latest_bidder,
+             class_name: 'Offer',
+             dependent: nil
 
     # confirming player
     def confirm!
