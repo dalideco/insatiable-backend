@@ -80,6 +80,7 @@ module V1
       assert_not_nil response_body['player']['owned_weapons']
       assert_not_nil response_body['player']['owned_packs']
       assert_not_nil response_body['player']['offers']
+      assert_not_nil response_body['player']['bidded_offers']
     end
   end
 end

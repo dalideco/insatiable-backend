@@ -27,7 +27,7 @@ module V1
       player['owned_weapons'] = @current_player.owned_weapons
       player['owned_packs'] = @current_player.owned_packs
       player['offers'] = @current_player.offers
-      player['bidded_offers'] = @current_player.interested_offers
+      player['bidded_offers'] = @current_player.bidded_offers
 
       render json: {
         success: true,
