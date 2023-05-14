@@ -75,6 +75,9 @@ module V1
 
       own.save!
 
+      # notifying offer seller
+      BidChannel.notify_sold(@offer)
+
       render json: {
         success: true,
         weapon: @offer.weapon
