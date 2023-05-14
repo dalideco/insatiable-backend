@@ -13,6 +13,14 @@ class BidChannel < ApplicationCable::Channel
     Rails.logger.info "Bid channel: Notified offer owner player #{offer.player.id}"
   end
 
+  def self.notify_owner_expired(offer)
+    broadcast_to(offer.player, {
+                   'type' => 'expired',
+                   'offer' => offer.as_json
+                 })
+    Rails.logger.info "Bid channel: Notified offer owner about expiration player #{offer.player.id}"
+  end
+
   def self.notify_latest_bidder(latest_bidder, offer)
     broadcast_to(latest_bidder, {
                    'type' => 'outbid',
