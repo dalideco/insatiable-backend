@@ -50,7 +50,14 @@ module V1
     end
 
     def bid
+      latest_bidder = @offer.latest_bidder
       @offer.update(current_bid: bid_params[:bid], latest_bidder_id: @current_player.id)
+
+      # notifying offer owner
+      BidChannel.notify_owner(@offer)
+
+      # notifying previous bidder
+      BidChannel.notify_latest_bidder(latest_bidder, @offer) if latest_bidder
 
       render json: {
         success: true,
