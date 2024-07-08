@@ -17,16 +17,16 @@ jobs:
         uses: actions/checkout@v3
       
       # Step: install ruby 
-      - name: Install Ruby
-        uses: ruby/setup-ruby@v1
-        with: 
-          bundler-cache: true
+      # - name: Install Ruby
+      #   uses: ruby/setup-ruby@v1
+      #   with: 
+      #     bundler-cache: true
 
       # Step: Install rubocop
-      - name: Install rubocop
-        run: |
-          gem install rubocop
-          gem install rubocop-rails
+      # - name: Install rubocop
+      #   run: |
+      #     gem install rubocop
+      #     gem install rubocop-rails
 
       # Step: Run linters
       - name: Run linters
@@ -42,10 +42,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Ruby and install gems
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+      # - name: Setup Ruby and install gems
+      #   uses: ruby/setup-ruby@v1
+      #   with:
+      #     bundler-cache: true
 
       - name: Run tests
         run: bin/rails test:all
