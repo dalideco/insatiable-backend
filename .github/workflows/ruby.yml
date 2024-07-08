@@ -8,7 +8,9 @@ on:
 
 jobs: 
   linters:
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - laptop-dali-1
     steps: 
       # Step: Check out the code.
       - name: Checkout code
@@ -32,7 +34,9 @@ jobs:
           rubocop --parallel
   tests:
     name: Tests
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - laptop-dali-1
 
     steps:
       - name: Checkout code
