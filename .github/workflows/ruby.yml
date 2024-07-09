@@ -16,10 +16,41 @@ jobs:
         uses: actions/checkout@v3
 
       # Step: install ruby
-      - name: Install Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+      - name: Install Ruby and dependencies
+        run: |
+          # Update and install necessary packages
+          sudo apt-get update
+          sudo apt-get install -y git curl
+
+          # Install rbenv
+          git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+          echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+          echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+          source ~/.bashrc
+
+          # Install ruby-build plugin
+          git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+          echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
+          source ~/.bashrc
+
+          # Install Ruby
+          rbenv install 3.2.0
+          rbenv global 3.2.0
+          ruby -v
+
+          # Set up Ruby
+          echo 'export PATH="$HOME/.rbenv/shims:$PATH"' >> ~/.bashrc
+          source ~/.bashrc
+          rbenv rehash
+
+          # Install Bundler
+          gem install bundler
+
+          # Install project dependencies
+          bundle install
+
+          # Run tests
+          bundle exec rspec
 
       # Step: Install rubocop
       - name: Install rubocop
