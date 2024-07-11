@@ -6,6 +6,9 @@ spec:
   template:
     spec:
       repository: dalideco/insatiable-backend
+      labels:
+        - self-hosted
+        - insatiable-label
 ---
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler

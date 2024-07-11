@@ -10,6 +10,7 @@ jobs:
   linters:
     runs-on:
       - self-hosted
+      - insatiable-label
     steps:
       # Step: Check out the code.
       - name: Checkout code
@@ -32,10 +33,16 @@ jobs:
       - name: Run linters
         run: |
           rubocop --parallel
+
+      # Step: Sleep for 2 minutes
+      - name: Sleep for 2 minutes
+        run: sleep 120
+
   test-1:
     name: Tests 1
     runs-on:
       - self-hosted
+      - insatiable-label
 
     steps:
       - name: Checkout code
@@ -49,10 +56,16 @@ jobs:
 
       - name: Run tests
         run: bin/rails test:all
+
+      # Step: Sleep for 2 minutes
+      - name: Sleep for 2 minutes
+        run: sleep 120
+
   test-2:
     name: Tests 2
     runs-on:
       - self-hosted
+      - insatiable-label
 
     steps:
       - name: Checkout code
@@ -66,10 +79,16 @@ jobs:
 
       - name: Run tests
         run: bin/rails test:all
+
+      # Step: Sleep for 2 minutes
+      - name: Sleep for 2 minutes
+        run: sleep 120
+
   test-3:
     name: Tests 3
     runs-on:
       - self-hosted
+      - insatiable-label
 
     steps:
       - name: Checkout code
@@ -83,3 +102,7 @@ jobs:
 
       - name: Run tests
         run: bin/rails test:all
+
+      # Step: Sleep for 2 minutes
+      - name: Sleep for 2 minutes
+        run: sleep 120
